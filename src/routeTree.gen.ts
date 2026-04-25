@@ -9,38 +9,153 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TeacherIndexRouteImport } from './routes/teacher/index'
+import { Route as StudentIndexRouteImport } from './routes/student/index'
+import { Route as TeacherNewRouteImport } from './routes/teacher/new'
+import { Route as StudentJoinRouteImport } from './routes/student/join'
+import { Route as TeacherTestIdIndexRouteImport } from './routes/teacher/$testId/index'
+import { Route as TeacherTestIdResultsRouteImport } from './routes/teacher/$testId/results'
+import { Route as StudentExamAttemptIdRouteImport } from './routes/student/exam/$attemptId'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeacherIndexRoute = TeacherIndexRouteImport.update({
+  id: '/teacher/',
+  path: '/teacher/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentIndexRoute = StudentIndexRouteImport.update({
+  id: '/student/',
+  path: '/student/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherNewRoute = TeacherNewRouteImport.update({
+  id: '/teacher/new',
+  path: '/teacher/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentJoinRoute = StudentJoinRouteImport.update({
+  id: '/student/join',
+  path: '/student/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherTestIdIndexRoute = TeacherTestIdIndexRouteImport.update({
+  id: '/teacher/$testId/',
+  path: '/teacher/$testId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherTestIdResultsRoute = TeacherTestIdResultsRouteImport.update({
+  id: '/teacher/$testId/results',
+  path: '/teacher/$testId/results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudentExamAttemptIdRoute = StudentExamAttemptIdRouteImport.update({
+  id: '/student/exam/$attemptId',
+  path: '/student/exam/$attemptId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/student/join': typeof StudentJoinRoute
+  '/teacher/new': typeof TeacherNewRoute
+  '/student/': typeof StudentIndexRoute
+  '/teacher/': typeof TeacherIndexRoute
+  '/student/exam/$attemptId': typeof StudentExamAttemptIdRoute
+  '/teacher/$testId/results': typeof TeacherTestIdResultsRoute
+  '/teacher/$testId/': typeof TeacherTestIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/student/join': typeof StudentJoinRoute
+  '/teacher/new': typeof TeacherNewRoute
+  '/student': typeof StudentIndexRoute
+  '/teacher': typeof TeacherIndexRoute
+  '/student/exam/$attemptId': typeof StudentExamAttemptIdRoute
+  '/teacher/$testId/results': typeof TeacherTestIdResultsRoute
+  '/teacher/$testId': typeof TeacherTestIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/student/join': typeof StudentJoinRoute
+  '/teacher/new': typeof TeacherNewRoute
+  '/student/': typeof StudentIndexRoute
+  '/teacher/': typeof TeacherIndexRoute
+  '/student/exam/$attemptId': typeof StudentExamAttemptIdRoute
+  '/teacher/$testId/results': typeof TeacherTestIdResultsRoute
+  '/teacher/$testId/': typeof TeacherTestIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/student/join'
+    | '/teacher/new'
+    | '/student/'
+    | '/teacher/'
+    | '/student/exam/$attemptId'
+    | '/teacher/$testId/results'
+    | '/teacher/$testId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/student/join'
+    | '/teacher/new'
+    | '/student'
+    | '/teacher'
+    | '/student/exam/$attemptId'
+    | '/teacher/$testId/results'
+    | '/teacher/$testId'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/student/join'
+    | '/teacher/new'
+    | '/student/'
+    | '/teacher/'
+    | '/student/exam/$attemptId'
+    | '/teacher/$testId/results'
+    | '/teacher/$testId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  StudentJoinRoute: typeof StudentJoinRoute
+  TeacherNewRoute: typeof TeacherNewRoute
+  StudentIndexRoute: typeof StudentIndexRoute
+  TeacherIndexRoute: typeof TeacherIndexRoute
+  StudentExamAttemptIdRoute: typeof StudentExamAttemptIdRoute
+  TeacherTestIdResultsRoute: typeof TeacherTestIdResultsRoute
+  TeacherTestIdIndexRoute: typeof TeacherTestIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +163,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/teacher/': {
+      id: '/teacher/'
+      path: '/teacher'
+      fullPath: '/teacher/'
+      preLoaderRoute: typeof TeacherIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/': {
+      id: '/student/'
+      path: '/student'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/new': {
+      id: '/teacher/new'
+      path: '/teacher/new'
+      fullPath: '/teacher/new'
+      preLoaderRoute: typeof TeacherNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/join': {
+      id: '/student/join'
+      path: '/student/join'
+      fullPath: '/student/join'
+      preLoaderRoute: typeof StudentJoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/$testId/': {
+      id: '/teacher/$testId/'
+      path: '/teacher/$testId'
+      fullPath: '/teacher/$testId/'
+      preLoaderRoute: typeof TeacherTestIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/$testId/results': {
+      id: '/teacher/$testId/results'
+      path: '/teacher/$testId/results'
+      fullPath: '/teacher/$testId/results'
+      preLoaderRoute: typeof TeacherTestIdResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/student/exam/$attemptId': {
+      id: '/student/exam/$attemptId'
+      path: '/student/exam/$attemptId'
+      fullPath: '/student/exam/$attemptId'
+      preLoaderRoute: typeof StudentExamAttemptIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  StudentJoinRoute: StudentJoinRoute,
+  TeacherNewRoute: TeacherNewRoute,
+  StudentIndexRoute: StudentIndexRoute,
+  TeacherIndexRoute: TeacherIndexRoute,
+  StudentExamAttemptIdRoute: StudentExamAttemptIdRoute,
+  TeacherTestIdResultsRoute: TeacherTestIdResultsRoute,
+  TeacherTestIdIndexRoute: TeacherTestIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
