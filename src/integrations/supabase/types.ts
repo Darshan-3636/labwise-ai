@@ -14,16 +14,389 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      code_submissions: {
+        Row: {
+          ai_feedback: string | null
+          ai_score: number | null
+          attempt_id: string
+          code: string
+          created_at: string
+          id: string
+          language: Database["public"]["Enums"]["code_language"]
+          last_output: string | null
+          last_stderr: string | null
+          paste_flagged: boolean | null
+          question_id: string
+          time_to_solve_seconds: number | null
+          updated_at: string
+        }
+        Insert: {
+          ai_feedback?: string | null
+          ai_score?: number | null
+          attempt_id: string
+          code?: string
+          created_at?: string
+          id?: string
+          language: Database["public"]["Enums"]["code_language"]
+          last_output?: string | null
+          last_stderr?: string | null
+          paste_flagged?: boolean | null
+          question_id: string
+          time_to_solve_seconds?: number | null
+          updated_at?: string
+        }
+        Update: {
+          ai_feedback?: string | null
+          ai_score?: number | null
+          attempt_id?: string
+          code?: string
+          created_at?: string
+          id?: string
+          language?: Database["public"]["Enums"]["code_language"]
+          last_output?: string | null
+          last_stderr?: string | null
+          paste_flagged?: boolean | null
+          question_id?: string
+          time_to_solve_seconds?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "code_submissions_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "test_attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "code_submissions_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "test_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proctor_violations: {
+        Row: {
+          attempt_id: string
+          created_at: string
+          id: string
+          resolved: boolean
+          resolved_at: string | null
+          resume_code: string
+          violation_type: string
+        }
+        Insert: {
+          attempt_id: string
+          created_at?: string
+          id?: string
+          resolved?: boolean
+          resolved_at?: string | null
+          resume_code: string
+          violation_type: string
+        }
+        Update: {
+          attempt_id?: string
+          created_at?: string
+          id?: string
+          resolved?: boolean
+          resolved_at?: string | null
+          resume_code?: string
+          violation_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proctor_violations_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "test_attempts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          college_uid: string | null
+          created_at: string
+          full_name: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          college_uid?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          college_uid?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      test_attempts: {
+        Row: {
+          code_score: number | null
+          created_at: string
+          final_score: number | null
+          id: string
+          pause_code: string | null
+          started_at: string
+          status: Database["public"]["Enums"]["attempt_status"]
+          student_college_uid: string
+          student_full_name: string
+          student_id: string
+          submitted_at: string | null
+          test_id: string
+          updated_at: string
+          violation_count: number
+          viva_score: number | null
+        }
+        Insert: {
+          code_score?: number | null
+          created_at?: string
+          final_score?: number | null
+          id?: string
+          pause_code?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["attempt_status"]
+          student_college_uid: string
+          student_full_name: string
+          student_id: string
+          submitted_at?: string | null
+          test_id: string
+          updated_at?: string
+          violation_count?: number
+          viva_score?: number | null
+        }
+        Update: {
+          code_score?: number | null
+          created_at?: string
+          final_score?: number | null
+          id?: string
+          pause_code?: string | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["attempt_status"]
+          student_college_uid?: string
+          student_full_name?: string
+          student_id?: string
+          submitted_at?: string | null
+          test_id?: string
+          updated_at?: string
+          violation_count?: number
+          viva_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_attempts_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_questions: {
+        Row: {
+          created_at: string
+          description: string
+          expected_output: string | null
+          hidden_tests: Json
+          id: string
+          max_score: number
+          position: number
+          sample_input: string | null
+          starter_code: string | null
+          test_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          expected_output?: string | null
+          hidden_tests?: Json
+          id?: string
+          max_score?: number
+          position?: number
+          sample_input?: string | null
+          starter_code?: string | null
+          test_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          expected_output?: string | null
+          hidden_tests?: Json
+          id?: string
+          max_score?: number
+          position?: number
+          sample_input?: string | null
+          starter_code?: string | null
+          test_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_questions_test_id_fkey"
+            columns: ["test_id"]
+            isOneToOne: false
+            referencedRelation: "tests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tests: {
+        Row: {
+          branch: string | null
+          code_weight: number
+          created_at: string
+          duration_minutes: number
+          exam_date: string | null
+          id: string
+          is_active: boolean
+          language: Database["public"]["Enums"]["code_language"]
+          section: string | null
+          strictness: Database["public"]["Enums"]["strictness_level"]
+          teacher_id: string
+          test_code: string
+          title: string
+          updated_at: string
+          viva_weight: number
+        }
+        Insert: {
+          branch?: string | null
+          code_weight?: number
+          created_at?: string
+          duration_minutes?: number
+          exam_date?: string | null
+          id?: string
+          is_active?: boolean
+          language?: Database["public"]["Enums"]["code_language"]
+          section?: string | null
+          strictness?: Database["public"]["Enums"]["strictness_level"]
+          teacher_id: string
+          test_code: string
+          title: string
+          updated_at?: string
+          viva_weight?: number
+        }
+        Update: {
+          branch?: string | null
+          code_weight?: number
+          created_at?: string
+          duration_minutes?: number
+          exam_date?: string | null
+          id?: string
+          is_active?: boolean
+          language?: Database["public"]["Enums"]["code_language"]
+          section?: string | null
+          strictness?: Database["public"]["Enums"]["strictness_level"]
+          teacher_id?: string
+          test_code?: string
+          title?: string
+          updated_at?: string
+          viva_weight?: number
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      viva_responses: {
+        Row: {
+          ai_feedback: string | null
+          ai_score: number | null
+          created_at: string
+          flagged_injection: boolean | null
+          id: string
+          needs_review: boolean | null
+          question_index: number
+          question_text: string
+          student_answer: string | null
+          submission_id: string
+          updated_at: string
+        }
+        Insert: {
+          ai_feedback?: string | null
+          ai_score?: number | null
+          created_at?: string
+          flagged_injection?: boolean | null
+          id?: string
+          needs_review?: boolean | null
+          question_index: number
+          question_text: string
+          student_answer?: string | null
+          submission_id: string
+          updated_at?: string
+        }
+        Update: {
+          ai_feedback?: string | null
+          ai_score?: number | null
+          created_at?: string
+          flagged_injection?: boolean | null
+          id?: string
+          needs_review?: boolean | null
+          question_index?: number
+          question_text?: string
+          student_answer?: string | null
+          submission_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "viva_responses_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "code_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "teacher" | "student"
+      attempt_status: "in_progress" | "paused" | "submitted"
+      code_language: "c" | "java" | "python"
+      strictness_level: "low" | "medium" | "high"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +523,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["teacher", "student"],
+      attempt_status: ["in_progress", "paused", "submitted"],
+      code_language: ["c", "java", "python"],
+      strictness_level: ["low", "medium", "high"],
+    },
   },
 } as const
